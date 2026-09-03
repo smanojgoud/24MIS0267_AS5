@@ -1,10 +1,11 @@
 pipeline {
     agent any
 
-    tools {
-        maven 'Maven 3.x' // Ensure this matches your Jenkins Global Tool Configuration name
-        jdk 'Java 17'     // Ensure this matches your Jenkins Java tool name
+       tools {
+        maven 'M3'     // Changed from 'Maven 3.x' to 'M3'
+        jdk 'Java 17'  // Keep this since your Java fix successfully cleared the JDK error!
     }
+
 
     stages {
         stage('Clone Repository') {
