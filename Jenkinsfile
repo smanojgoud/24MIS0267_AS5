@@ -3,11 +3,7 @@ pipeline {
 
     tools {
         maven 'M3' 
-    }
-
-    environment {
-        // Points Jenkins directly to your system's Java home
-        JAVA_HOME = "C:\\Program Files\\Java\\jdk-17"
+        // We removed the 'Java 17' download block to let Jenkins fall back to its system execution environment.
     }
 
     stages {
@@ -19,26 +15,22 @@ pipeline {
 
         stage('Clean & Compile') {
             steps {
-                // Incorporate the environment variable directly into the build
-                withEnv(["PATH+JAVA=${env.JAVA_HOME}\\bin"]) {
-                    sh 'mvn clean compile'
-                }
+                // Changed 'sh' to 'bat' for Windows compatibility
+                bat 'mvn clean compile'
             }
         }
 
         stage('Run Unit Tests') {
             steps {
-                withEnv(["PATH+JAVA=${env.JAVA_HOME}\\bin"]) {
-                    sh 'mvn test'
-                }
+                // Changed 'sh' to 'bat' for Windows compatibility
+                bat 'mvn test'
             }
         }
 
         stage('Package Application') {
             steps {
-                withEnv(["PATH+JAVA=${env.JAVA_HOME}\\bin"]) {
-                    sh 'mvn package'
-                }
+                // Changed 'sh' to 'bat' for Windows compatibility
+                bat 'mvn package'
             }
         }
     }
