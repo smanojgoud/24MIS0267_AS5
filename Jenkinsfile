@@ -1,11 +1,14 @@
 pipeline {
     agent any
 
-       tools {
-        maven 'M3'     // Changed from 'Maven 3.x' to 'M3'
-        jdk 'Java 17'  // Keep this since your Java fix successfully cleared the JDK error!
+    tools {
+        maven 'M3' 
     }
 
+    environment {
+        // Points Jenkins directly to your system's Java home
+        JAVA_HOME = "C:\\Program Files\\Java\\jdk-17"
+    }
 
     stages {
         stage('Clone Repository') {
@@ -16,19 +19,26 @@ pipeline {
 
         stage('Clean & Compile') {
             steps {
-                sh 'mvn clean compile'
+                // Incorporate the environment variable directly into the build
+                withEnv(["PATH+JAVA=${env.JAVA_HOME}\\bin"]) {
+                    sh 'mvn clean compile'
+                }
             }
         }
 
         stage('Run Unit Tests') {
             steps {
-                sh 'mvn test'
+                withEnv(["PATH+JAVA=${env.JAVA_HOME}\\bin"]) {
+                    sh 'mvn test'
+                }
             }
         }
 
         stage('Package Application') {
             steps {
-                sh 'mvn package'
+                withEnv(["PATH+JAVA=${env.JAVA_HOME}\\bin"]) {
+                    sh 'mvn package'
+                }
             }
         }
     }
