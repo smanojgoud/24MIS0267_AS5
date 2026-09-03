@@ -3,7 +3,6 @@ pipeline {
 
     tools {
         maven 'M3' 
-        // We removed the 'Java 17' download block to let Jenkins fall back to its system execution environment.
     }
 
     stages {
@@ -15,22 +14,22 @@ pipeline {
 
         stage('Clean & Compile') {
             steps {
-                // Changed 'sh' to 'bat' for Windows compatibility
-                bat 'mvn clean compile'
+                // Added -f folder/pom.xml to point Maven to the right folder location
+                bat 'mvn -f internet-billing-system/pom.xml clean compile'
             }
         }
 
         stage('Run Unit Tests') {
             steps {
-                // Changed 'sh' to 'bat' for Windows compatibility
-                bat 'mvn test'
+                // Added -f folder/pom.xml to point Maven to the right folder location
+                bat 'mvn -f internet-billing-system/pom.xml test'
             }
         }
 
         stage('Package Application') {
             steps {
-                // Changed 'sh' to 'bat' for Windows compatibility
-                bat 'mvn package'
+                // Added -f folder/pom.xml to point Maven to the right folder location
+                bat 'mvn -f internet-billing-system/pom.xml package'
             }
         }
     }
